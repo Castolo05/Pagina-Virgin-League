@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PES 06 Virgin League</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            z-index: 0;
+        }
+
+        .circle1 {
+            width: 200px;
+            height: 200px;
+            top: -50px;
+            left: -50px;
+        }
+
+        .circle2 {
+            width: 300px;
+            height: 300px;
+            bottom: -150px;
+            right: -150px;
+        }
+
+        .circle3 {
+            width: 100px;
+            height: 100px;
+            bottom: 50px;
+            left: 50px;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border: 5px solid white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="circle circle1"></div>
+    <div class="circle circle2"></div>
+    <div class="circle circle3"></div>
+    <div class="container">
+        <h1>PES 06 Virgin League</h1>
+        <h2>Official Website</h2>
+        <div class="menu">
+            <div class="dropdown">
+                <button class="btn btn-menu" onclick="toggleDropdown('herramientas-dropdown')">Herramientas</button>
+                <div id="herramientas-dropdown" class="dropdown-content">
+                    <a href="asignar-encuentros.html">Asignar encuentros</a>
+                    <a href="asignar-equipos.html">Asignar equipos</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-menu" onclick="toggleDropdown('historial-dropdown')">Historial</button>
+                <div id="historial-dropdown" class="dropdown-content">
+                    <a href="#" onclick="mostrarImagen('primera.png')">Temporada 1</a>
+                    <a href="#">Temporada 2</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="overlay" class="overlay" onclick="ocultarImagen()">
+        <img id="overlay-img" src="" alt="Temporada 1">
+    </div>
+    <script>
+        // JavaScript functions for dropdown and image overlay functionality
+        function toggleDropdown(dropdownId) {
+            document.getElementById(dropdownId).classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.btn-menu')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function mostrarImagen(imageSrc) {
+            var overlay = document.getElementById("overlay");
+            var overlayImg = document.getElementById("overlay-img");
+            overlayImg.src = imageSrc;
+            overlay.style.display = "flex";
+        }
+
+        function ocultarImagen() {
+            document.getElementById("overlay").style.display = "none";
+        }
+    </script>
+</body>
+</html>

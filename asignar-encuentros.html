@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PESRes - Asignar Encuentros</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="btn btn-inicio">Inicio</a>
+        <h1>Asignar Encuentros</h1>
+        <div class="input-group">
+            <label for="numEquipos">Número de equipos:</label>
+            <input type="number" id="numEquipos" min="2" max="99">
+            <button id="generarLista" class="btn">Generar lista</button>
+        </div>
+        <ul id="listaEquipos"></ul>
+        <button id="sortear" class="btn">Sortear</button>
+        <div class="encuentros">
+            <div id="torneo" class="lista-equipos"></div>
+            <div id="resultado" class="resultados-sorteos"></div>
+        </div>
+    </div>
+    <script src="js/asignar-encuentros.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PESRes - Asignar Equipos</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="btn btn-inicio">Inicio</a>
+        <h1>Asignar Equipos</h1>
+        <div class="input-group">
+            <label for="numParticipantes">Número de participantes (2-32):</label>
+            <input type="number" id="numParticipantes" min="2" max="32">
+            <button id="generarListas" class="btn">Generar listas</button>
+        </div>
+        <div class="listas-container">
+            <div class="lista">
+                <h2>Jugadores</h2>
+                <ul id="listaJugadores"></ul>
+            </div>
+            <div class="lista">
+                <h2>Equipos</h2>
+                <ul id="listaEquipos"></ul>
+            </div>
+        </div>
+        <div class="toggle-container" style="display: none;">
+            <input type="checkbox" id="toggleReveal">
+            <label for="toggleReveal">Revelar todos los resultados</label>
+        </div>
+        <button id="sortear" class="btn" style="display: none;">Sortear</button>
+        <div id="resultado"></div>
+    </div>
+    <script src="js/asignar-equipos.js"></script>
+</body>
+</html>
