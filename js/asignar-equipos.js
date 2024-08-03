@@ -25,8 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const frases = [
-        "{jugador}, y si te llama Roman ¿irias al {equipo}",
-        "Al petarraco de {jugador} le cayó de arriba el {equipo}",
         "Uh que ojete! parece que a {jugador} le tocó el {equipo}",
         "Mala suerte che. {jugador} se la va a tener que bancar con el {equipo}",
         "¡Qué casualidad! {jugador} y el {equipo}, una combinación inesperada",
@@ -65,7 +63,11 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (jugadores.length === equipos.length) {
             const asignaciones = asignarEquiposAleatorios(jugadores, equipos);
-            mostrarResultado(asignaciones);
+            if (asignaciones) {
+                mostrarResultado(asignaciones);
+            } else {
+                alert('No se pudo realizar el sorteo con las restricciones dadas. Por favor, intente nuevamente.');
+            }
         } else {
             alert('Asegúrese de que todas las listas estén completas.');
         }
@@ -112,14 +114,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const equiposDisponibles = [...equipos];
     
         for (const jugador of jugadores) {
-            let equipo;
-            do {
+            let equipoAsignado = null;
+            for (let i = 0; i < equiposDisponibles.length; i++) {
                 const indiceAleatorio = Math.floor(Math.random() * equiposDisponibles.length);
-                equipo = equiposDisponibles[indiceAleatorio];
-            } while (combinacionesProhibidas.some(([j, e]) => j === jugador && e === equipo));
-    
-            asignaciones.push({ jugador, equipo });
-            equiposDisponibles.splice(equiposDisponibles.indexOf(equipo), 1);
+                const equipo = equiposDisponibles[indiceAleatorio];
+                if (!combinacionesProhibidas.some(([j, e]) => j === jugador && e === equipo)) {
+                    equipoAsignado = equipo;
+                    equiposDisponibles.splice(indiceAleatorio, 1);
+                    break;
+                }
+            }
+            
+            if (equipoAsignado === null) {
+                return null; // No se pudo asignar un equipo válido
+            }
+            
+            asignaciones.push({ jugador, equipo: equipoAsignado });
         }
     
         return asignaciones;
@@ -127,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function mostrarResultado(asignaciones) {
         resultado.innerHTML = '<h3>Resultados del sorteo:</h3>';
-        const frasesDisponibles = [...frases];
+        let frasesDisponibles = [...frases];
     
         asignaciones.forEach(({jugador, equipo}) => {
             let frase;
@@ -136,7 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 frase = frasesDisponibles[indiceAleatorio];
                 frasesDisponibles.splice(indiceAleatorio, 1);
             } else {
-                frase = frases[Math.floor(Math.random() * frases.length)];
+                frasesDisponibles = [...frases];
+                const indiceAleatorio = Math.floor(Math.random() * frasesDisponibles.length);
+                frase = frasesDisponibles[indiceAleatorio];
+                frasesDisponibles.splice(indiceAleatorio, 1);
             }
     
             frase = frase.replace('{jugador}', `<span class="jugador">${jugador}</span>`)
