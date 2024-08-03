@@ -7,6 +7,46 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultado = document.getElementById('resultado');
     const toggleReveal = document.getElementById('toggleReveal');
 
+    const combinacionesProhibidas = [
+        ["Julian Rivero", "Barcelona"],
+        ["Fausto Guaita", "Atletico de Madrid"],
+        ["Tomas Loto", "Manchester United"],
+        ["Santiago Marzolino", "Juventus"],
+        ["Esteban Raffaeli", "Chelsea"],
+        ["Daniel Gongora", "Real Madrid"],
+        ["Daniel Cordoba", "Arsenal"],
+        ["Tomas Beneitez", "Liverpool"],
+        ["Ulises Banus", "Milan"],
+        ["Franco Nelli", "Inter"],
+        ["Julian Gonzalez", "Tottenham"],
+        ["Facundo Berbel", "Bayern Munich"],
+        ["Mateo Alonso", "Villareal"],
+        ["Nahuel Lamorte", "Roma"]
+    ];
+
+    const frases = [
+        "{jugador}, y si te llama Roman ¿irias al {equipo}",
+        "Al petarraco de {jugador} le cayó de arriba el {equipo}",
+        "Uh que ojete! parece que a {jugador} le tocó el {equipo}",
+        "Mala suerte che. {jugador} se la va a tener que bancar con el {equipo}",
+        "¡Qué casualidad! {jugador} y el {equipo}, una combinación inesperada",
+        "Parece que {jugador} tendrá que aprender a amar al {equipo}",
+        "¡Vaya sorpresa! {jugador} ahora es parte de la familia del {equipo}",
+        "El destino ha hablado: {jugador} defenderá los colores del {equipo}",
+        "¿Quién lo diría? {jugador} y el {equipo}, unidos por el azar",
+        "La suerte está echada: {jugador} se pone la camiseta del {equipo}",
+        "¡Atención! {jugador} acaba de ser 'condenado' al {equipo}",
+        "En un giro inesperado, {jugador} ahora es la nueva estrella del {equipo}",
+        "¡Increíble! {jugador} tendrá que aprender el himno del {equipo}",
+        "¡Qué locura! {jugador} ahora deberá defender a muerte al {equipo}",
+        "¡Sorpresa, sorpresa! {jugador} se ha convertido en el nuevo ídolo del {equipo}",
+        "¡Atención fanáticos! {jugador} ahora sudará la camiseta del {equipo}",
+        "¡Bombazo! {jugador} es la nueva incorporación estrella del {equipo}",
+        "¡Impensado! {jugador} tendrá que acostumbrarse a los colores del {equipo}",
+        "Parece que al guampudo de {jugador} le tocó el {equipo}",
+        "Quien lo diria, {jugador} va a campeonar con el {equipo}"
+    ];
+
     generarListas.addEventListener('click', () => {
         const num = parseInt(numParticipantes.value);
         if (num >= 2 && num <= 32) {
@@ -68,39 +108,39 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function asignarEquiposAleatorios(jugadores, equipos) {
-        const equiposAleatorios = [...equipos].sort(() => Math.random() - 0.5);
-        return jugadores.map((jugador, index) => ({jugador, equipo: equiposAleatorios[index]}));
+        const asignaciones = [];
+        const equiposDisponibles = [...equipos];
+    
+        for (const jugador of jugadores) {
+            let equipo;
+            do {
+                const indiceAleatorio = Math.floor(Math.random() * equiposDisponibles.length);
+                equipo = equiposDisponibles[indiceAleatorio];
+            } while (combinacionesProhibidas.some(([j, e]) => j === jugador && e === equipo));
+    
+            asignaciones.push({ jugador, equipo });
+            equiposDisponibles.splice(equiposDisponibles.indexOf(equipo), 1);
+        }
+    
+        return asignaciones;
     }
 
     function mostrarResultado(asignaciones) {
         resultado.innerHTML = '<h3>Resultados del sorteo:</h3>';
-        const frases = [
-            "Uh que ojete! parece que a {jugador} le tocó el {equipo}",
-            "Mala suerte che. {jugador} se la va a tener que bancar con el {equipo}",
-            "¡Qué casualidad! {jugador} y el {equipo}, una combinación inesperada",
-            "Parece que {jugador} tendrá que aprender a amar al {equipo}",
-            "¡Vaya sorpresa! {jugador} ahora es parte de la familia del {equipo}",
-            "El destino ha hablado: {jugador} defenderá los colores del {equipo}",
-            "¿Quién lo diría? {jugador} y el {equipo}, unidos por el azar",
-            "La suerte está echada: {jugador} se pone la camiseta del {equipo}",
-            "¡Atención! {jugador} acaba de ser 'condenado' al {equipo}",
-            "En un giro inesperado, {jugador} ahora es la nueva estrella del {equipo}",
-            "¡Increíble! {jugador} tendrá que aprender el himno del {equipo}",
-            "¡Qué locura! {jugador} ahora deberá defender a muerte al {equipo}",
-            "¡Sorpresa, sorpresa! {jugador} se ha convertido en el nuevo ídolo del {equipo}",
-            "¡Atención fanáticos! {jugador} ahora sudará la camiseta del {equipo}",
-            "¡Bombazo! {jugador} es la nueva incorporación estrella del {equipo}",
-            "¡Impensado! {jugador} tendrá que acostumbrarse a los colores del {equipo}",
-            "Parece que al guampudo de {jugador} le tocó el {equipo}",
-            "Quien lo diria, {jugador} va a campeonar con el {equipo}"
-        ];
-
-        asignaciones = asignaciones.sort(() => Math.random() - 0.5);
-
+        const frasesDisponibles = [...frases];
+    
         asignaciones.forEach(({jugador, equipo}) => {
-            const frase = frases[Math.floor(Math.random() * frases.length)]
-                .replace('{jugador}', `<span class="jugador">${jugador}</span>`)
-                .replace('{equipo}', `<span class="equipo">${equipo}</span>`);
+            let frase;
+            if (frasesDisponibles.length > 0) {
+                const indiceAleatorio = Math.floor(Math.random() * frasesDisponibles.length);
+                frase = frasesDisponibles[indiceAleatorio];
+                frasesDisponibles.splice(indiceAleatorio, 1);
+            } else {
+                frase = frases[Math.floor(Math.random() * frases.length)];
+            }
+    
+            frase = frase.replace('{jugador}', `<span class="jugador">${jugador}</span>`)
+                         .replace('{equipo}', `<span class="equipo">${equipo}</span>`);
             
             const div = document.createElement('div');
             div.className = 'resultado-item';
@@ -111,7 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             resultado.appendChild(div);
         });
-
+    
         aplicarEstadoToggle();
     }
 
