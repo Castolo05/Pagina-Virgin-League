@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ["Fausto Guaita", "Benfica"],
     ["Fausto Guaita", "Valencia"],
     ["Fausto Guaita", "Atletico de Madrid"],
+    ["Fausto Guaita", "Lyon"],
     ["Tomas Loto", "Real Madrid"],
     ["Tomas Loto", "Barcelona"],
     ["Tomas Loto", "Inter"],
@@ -52,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ["Julian Gonzalez", "Benfica"],
     ["Julian Gonzalez", "Valencia"],
     ["Julian Gonzalez", "Atletico de Madrid"],
+    ["Julian Gonzalez", "Lyon"],
     ["Facundo Berbel", "Juventus"],
     ["Facundo Berbel", "Bayern Munich"],
     ["Facundo Berbel", "Roma"],
@@ -64,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ["Nahuel Lamorte", "Bayern Munich"],
     ["Nahuel Lamorte", "Roma"],
     ["Nahuel Lamorte", "Villarreal"]
+
   ];
 
     const frases = [
