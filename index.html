@@ -4,12 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PES 06 Virgin League</title>
-    <link rel="stylesheet" href="css/styles.css">
     <link rel="icon" href="icono.ico" type="image/x-icon">
     <style>
         body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
         }
 
         .circle {
@@ -40,6 +56,66 @@
             left: 50px;
         }
 
+        .menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .dropdown-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .btn-menu {
+            min-width: 120px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4c74af;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-menu:hover {
+            background-color: #4553a0;
+        }
+
+        .btn-liga-actual {
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .show {
+            display: block;
+        }
+
         .overlay {
             position: fixed;
             top: 0;
@@ -59,6 +135,56 @@
             border: 5px solid white;
             border-radius: 10px;
         }
+
+        /* Estilos para pantallas menores a 600px */
+        @media screen and (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 18px;
+            }
+
+            .dropdown-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .btn-menu {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        /* Estilos para pantallas de 1200px */
+        @media screen and (min-width: 1200px) {
+            .container {
+                padding: 40px;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            h2 {
+                font-size: 32px;
+            }
+
+            .dropdown-row {
+                gap: 40px;
+            }
+
+            .btn-menu {
+                min-width: 180px;
+                font-size: 18px;
+                padding: 15px 25px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -69,27 +195,29 @@
         <h1>PES 06 Virgin League</h1>
         <h2>Official Website</h2>
         <div class="menu">
-            <div class="dropdown">
-                <button class="btn btn-menu" onclick="toggleDropdown('herramientas-dropdown')">Herramientas</button>
-                <div id="herramientas-dropdown" class="dropdown-content">
-                    <a href="asignar-encuentros.html">Asignar encuentros</a>
-                    <a href="asignar-equipos.html">Asignar equipos</a>
+            <div class="dropdown-row">
+                <div class="dropdown">
+                    <button class="btn btn-menu" onclick="toggleDropdown('herramientas-dropdown')">Herramientas</button>
+                    <div id="herramientas-dropdown" class="dropdown-content">
+                        <a href="asignar-encuentros.html">Asignar encuentros</a>
+                        <a href="asignar-equipos.html">Asignar equipos</a>
+                    </div>
+                </div>
+                <div class="dropdown">
+                    <button class="btn btn-menu" onclick="toggleDropdown('historial-dropdown')">Historial</button>
+                    <div id="historial-dropdown" class="dropdown-content">
+                        <a href="#" onclick="mostrarImagen('primera.png')">Temporada 1</a>
+                        <a href="#">Temporada 2</a>
+                    </div>
                 </div>
             </div>
-            <div class="dropdown">
-                <button class="btn btn-menu" onclick="toggleDropdown('historial-dropdown')">Historial</button>
-                <div id="historial-dropdown" class="dropdown-content">
-                    <a href="#" onclick="mostrarImagen('primera.png')">Temporada 1</a>
-                    <a href="#">Temporada 2</a>
-                </div>
-            </div>
+            <a href="https://faustoguaita.github.io/Pagina-liga/" class="btn btn-menu btn-liga-actual">Liga actual</a>
         </div>
     </div>
     <div id="overlay" class="overlay" onclick="ocultarImagen()">
         <img id="overlay-img" src="" alt="Temporada 1">
     </div>
     <script>
-        // JavaScript functions for dropdown and image overlay functionality
         function toggleDropdown(dropdownId) {
             document.getElementById(dropdownId).classList.toggle("show");
         }
